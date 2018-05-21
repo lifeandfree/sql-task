@@ -126,7 +126,8 @@
           </configuration>
           <executions>
             <execution>
-              <phase>process-resources</phase>
+              <!--<phase>process-resources</phase>-->
+              <phase>test-compile</phase>
               <goals>
                 <goal>update</goal>
               </goals>

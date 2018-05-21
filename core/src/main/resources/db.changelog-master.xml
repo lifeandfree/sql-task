@@ -11,7 +11,8 @@
         <runningAs username="liquibase"/>
     </preConditions>
 
-    <changeSet id="1" author="nvoxland">
+    <changeSet id="1" author="liquibase">
+
         <createTable tableName="organization">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -20,6 +21,31 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <createTable tableName="product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="location">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="city" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+
+
     </changeSet>
 
 </databaseChangeLog>

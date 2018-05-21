@@ -1,0 +1,141 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="liquibase">
+
+        <createTable tableName="organization">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="location">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="city" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organization_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="organization_id"
+                                 baseTableName="location"
+                                 constraintName="fk_location_organization"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organization"/>
+
+        <createTable tableName="contract">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="payment">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contract_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="contract_id"
+                                 baseTableName="payment"
+                                 constraintName="fk_contract_payment"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contract"/>
+
+        <createTable tableName="shipment">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="expected_delivery" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="actual_delivery" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="expected_shipment" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actual_shipment" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contract_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="shipment_product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shipment_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+    </changeSet>
+
+    <changeSet id="2" author="liquibase" context="test">
+        <insert tableName="organization">
+            <column name="name" value="organization 1"/>
+        </insert>
+        <insert tableName="organization">
+            <column name="name" value="organization 2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
